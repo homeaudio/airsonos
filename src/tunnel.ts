@@ -9,6 +9,20 @@ import { SonosDevice } from './sonos'
 // even if we don't really care about the result
 const EMPTY_CALLBACK = () => { }
 
+function generateSonosMetadata(clientName: string) {
+        return `<?xml version="1.0"?>
+<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/"
+    xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/"
+    xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
+<item id="R:0/0/49" parentID="R:0/0" restricted="true">
+    <dc:title>${clientName}</dc:title>
+    <upnp:class>object.item.audioItem.audioBroadcast</upnp:class>
+    <desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON65031_</desc>
+</item>
+</DIDL-Lite>`
+    }
+
 export class DeviceTunnel extends EventEmitter {
 
     icecastServer: Nicercast
@@ -74,21 +88,10 @@ export class DeviceTunnel extends EventEmitter {
             // Query the server to find the active port
             const port = this.icecastServer.address().port
             this.device.play({
-                metadata: this.generateSonosMetadata(this.deviceName),
+                metadata: generateSonosMetadata(this.deviceName),
                 uri: `x-rincon-mp3radio://${ip.address()}:${port}/listen.m3u`,
             })
         })
-    }
-
-    generateSonosMetadata(clientName) {
-        return `<?xml version="1.0"?>
-<DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
-<item id="R:0/0/49" parentID="R:0/0" restricted="true">
-<dc:title>${clientName}</dc:title>
-<upnp:class>object.item.audioItem.audioBroadcast</upnp:class>
-<desc id="cdudn" nameSpace="urn:schemas-rinconnetworks-com:metadata-1-0/">SA_RINCON65031_</desc>
-</item>
-</DIDL-Lite>`
     }
 
     start() {

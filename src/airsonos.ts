@@ -16,7 +16,7 @@ export class AirSonos {
             tunnel.on('error', (err: any) => {
                 if (err.code === 415) {
                     console.error('Warning!', err.message)
-                    console.error('AirSonos currently does not support codecs used by applications such as iTunes or AirFoil.')
+                    console.error('AirSonos does not support codecs used by applications such as iTunes or AirFoil.')
                     console.error('Progress on this issue: https://github.com/stephen/nodetunes/issues/1')
                 } else {
                     console.error('Unknown error:')

@@ -1,7 +1,7 @@
 import * as sonos from 'sonos'
 import * as ip from 'ip'
 
-export function diagonstics() {
+export function airsonosDiagnostics() {
     console.log('AirSonos Diagnostics')
     console.log('node version\t', process.version)
     console.log('operating sys\t', process.platform, '(' + process.arch + ')')

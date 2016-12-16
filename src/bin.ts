@@ -2,6 +2,7 @@
 
 import * as flags from 'flags'
 import { AirSonos } from './airsonos'
+import { airsonosDiagnostics } from './diagnostics'
 
 flags.defineBoolean('diagnostics', false, 'run diagnostics utility')
 flags.defineBoolean('version', false, 'return version number')
@@ -16,8 +17,7 @@ if (flags.get('version')) {
 
 } else if (flags.get('diagnostics')) {
 
-    const diag = require('../lib/diagnostics')
-    diag()
+    airsonosDiagnostics()
 
 } else {
 
@@ -28,10 +28,10 @@ if (flags.get('version')) {
         verbose: flags.get('verbose'),
     })
 
-    instance.start().then((tunnels) => {
+    instance.start().then(tunnels => {
 
-        tunnels.forEach((tunnel) => {
-            console.log(`${tunnel.deviceName} (@ ${tunnel.device.host}:${tunnel.device.port}, ${tunnel.device.groupId})`)
+        tunnels.forEach(t => {
+            console.log(`${t.deviceName} (@ ${t.device.host}:${t.device.port}, ${t.device.groupId})`)
         })
 
         console.log(`\nSearch complete. Set up ${tunnels.length} device tunnel${tunnels.length === 1 ? '' : 's'}.`)

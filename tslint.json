@@ -1,6 +1,6 @@
 {
   "rules": {
-    "align": [true, "arguments", "parameters", "statements"],
+    "align": [true, "parameters", "statements"],
     "array-type": [true, "array"],
     "class-name": true,
     "comment-format": [true, "check-lowercase", "check-space"],
@@ -26,7 +26,6 @@
     "no-var-keyword": true,
     "object-literal-key-quotes": [true, "as-needed"],
     "object-literal-shorthand": true,
-    "object-literal-sort-keys": true,
     "one-line": [
       true,
       "check-catch",
