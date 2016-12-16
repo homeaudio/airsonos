@@ -1,10 +1,11 @@
 import { promisify } from 'bluebird'
 import * as sonos from 'sonos'
 
-const _sonosSearchPromise = promisify<any[]>(sonos.LogicalDevice.search)
 
-export function sonosSearch(): Promise<any[]> {
-    return _sonosSearchPromise()
+export function sonosSearch(callback: Function): Function {
+    const searcher = new sonos.Search()
+    searcher.on('DeviceAvailable', callback)
+    return () => searcher.destroy()
 }
 
 

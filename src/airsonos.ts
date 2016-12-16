@@ -1,5 +1,6 @@
 import { sonosSearch } from './sonos'
 import { DeviceTunnel } from './tunnel'
+import * as sonos from 'sonos'
 
 export class AirSonos {
 
@@ -7,12 +8,12 @@ export class AirSonos {
 
     constructor(readonly options = {}) { }
 
-    async start() {
-        const devices = await sonosSearch()
+    start() {
+        const searcher = sonos.search(async (device, model) => {
+            console.log(device)
+            console.log(model)
 
-        const promises = devices.map(async device => {
             const tunnel = await DeviceTunnel.createFor(device, this.options)
-
             tunnel.on('error', (err: any) => {
                 if (err.code === 415) {
                     console.error('Warning!', err.message)
@@ -26,10 +27,7 @@ export class AirSonos {
 
             tunnel.start()
             this.tunnels[tunnel.device.groupId] = tunnel
-            return tunnel
         })
-
-        return Promise.all(promises)
     }
 
     async refresh() {

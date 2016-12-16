@@ -18,7 +18,9 @@
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json ./src/*.ts"
   },
-  "bin": { "airsonos": "./dist/bin.js" },
+  "bin": {
+    "airsonos": "./dist/bin.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/jabooth/airsonos.git"
@@ -31,7 +33,7 @@
     "ip": "1.1.0",
     "nicercast": "git://github.com/jabooth/nicercast.git#typescript",
     "nodetunes": "git://github.com/jabooth/nodetunes.git#typescript",
-    "sonos": "git://github.com/stephen/node-sonos.git#stephen-1.0.0"
+    "sonos": "^0.12.1"
   },
   "license": "MIT",
   "devDependencies": {

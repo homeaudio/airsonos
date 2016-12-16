@@ -28,13 +28,15 @@ if (flags.get('version')) {
         verbose: flags.get('verbose'),
     })
 
-    instance.start().then(tunnels => {
+    instance.start()
 
-        tunnels.forEach(t => {
-            console.log(`${t.deviceName} (@ ${t.device.host}:${t.device.port}, ${t.device.groupId})`)
-        })
+    // .then(tunnels => {
 
-        console.log(`\nSearch complete. Set up ${tunnels.length} device tunnel${tunnels.length === 1 ? '' : 's'}.`)
-    })
+    //     tunnels.forEach(t => {
+    //         console.log(`${t.deviceName} (@ ${t.device.host}:${t.device.port}, ${t.device.groupId})`)
+    //     })
+
+    //     console.log(`\nSearch complete. Set up ${tunnels.length} device tunnel${tunnels.length === 1 ? '' : 's'}.`)
+    // })
 
 }
