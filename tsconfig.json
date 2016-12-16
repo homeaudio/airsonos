@@ -10,7 +10,7 @@
         "noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
-        "outDir": "lib/",
+        "outDir": "dist/",
         "sourceMap": true,
         "strictNullChecks": true,
         "target": "es2015"

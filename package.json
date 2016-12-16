@@ -18,7 +18,7 @@
     "watch": "tsc -w",
     "lint": "tslint -c tslint.json ./src/*.ts"
   },
-  "bin": { "airsonos": "./lib/bin.js" },
+  "bin": { "airsonos": "./dist/bin.js" },
   "repository": {
     "type": "git",
     "url": "https://github.com/jabooth/airsonos.git"

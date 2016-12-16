@@ -1,19 +1,5 @@
-lib
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-
-pids
-logs
-results
-
-npm-debug.log
+dist
 node_modules
 
-_site/
 .DS_STORE
-bin/
+*.log
