@@ -6,5 +6,6 @@
         "**/*.js": true,
         "**/*.d.ts": true,
         "**/*.js.map": true
-    }
+    },
+    "tslint.autoFixOnSave": true
 }

@@ -14,8 +14,7 @@ export class DeviceTunnel extends EventEmitter {
     icecastServer: Nicercast
     airplayServer: NodeTunes
 
-    constructor(readonly device: SonosDevice,
-                readonly deviceName: string,
+    constructor(readonly device: SonosDevice, readonly deviceName: string,
                 readonly options: Partial<NodeTunesOptions>) {
         super()
         this.bindAirplayServer()
@@ -34,7 +33,7 @@ export class DeviceTunnel extends EventEmitter {
 
         this.airplayServer = new NodeTunes({
             serverName: `${this.deviceName} (AirSonos)`,
-            ...this.options
+            ...this.options,
         })
 
         this.airplayServer.on('error', this.emit.bind(this, 'error'))
@@ -48,7 +47,7 @@ export class DeviceTunnel extends EventEmitter {
         this.airplayServer.on('clientDisconnected', () => this.device.stop(EMPTY_CALLBACK))
 
         this.airplayServer.on('volumeChange', (vol: number) => {
-            let targetVol = 100 - Math.floor(-1 * (Math.max(vol, -30) / 30) * 100)
+            const targetVol = 100 - Math.floor(-1 * (Math.max(vol, -30) / 30) * 100)
             this.device.setVolume(targetVol, EMPTY_CALLBACK)
         })
     }
@@ -61,22 +60,22 @@ export class DeviceTunnel extends EventEmitter {
 
         this.airplayServer.on('metadataChange', (metadata) => {
             if (metadata.minm) {
-                let asarPart = metadata.asar ? ` - ${metadata.asar}` : '' // artist
-                let asalPart = metadata.asal ? ` (${metadata.asal})` : '' // album
+                const asarPart = metadata.asar ? ` - ${metadata.asar}` : '' // artist
+                const asalPart = metadata.asal ? ` (${metadata.asal})` : '' // album
 
                 this.icecastServer.setMetadata(metadata.minm + asarPart + asalPart)
             }
         })
 
-        this.airplayServer.on('clientDisconnected', () => this.icecastServer.close())
+        this.airplayServer.on( 'clientDisconnected', () => this.icecastServer.close())
 
         this.icecastServer.listen(0, () => {
 
             // Query the server to find the active port
             const port = this.icecastServer.address().port
             this.device.play({
-                uri: `x-rincon-mp3radio://${ip.address()}:${port}/listen.m3u`,
                 metadata: this.generateSonosMetadata(this.deviceName),
+                uri: `x-rincon-mp3radio://${ip.address()}:${port}/listen.m3u`,
             })
         })
     }

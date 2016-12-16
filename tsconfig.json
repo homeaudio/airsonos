@@ -10,7 +10,10 @@
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noImplicitThis": true,
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "forceConsistentCasingInFileNames": true
     },
     "files": [
         "./src/index.ts"

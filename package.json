@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w"
+    "watch": "tsc -w",
+    "lint": "tslint -c tslint.json ./src/*.ts"
   },
   "bin": "./bin/index.js",
   "repository": {
@@ -35,5 +36,6 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "tslint": "^4.1.0"
   }
 }

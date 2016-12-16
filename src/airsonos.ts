@@ -10,7 +10,7 @@ export class AirSonos {
     async start() {
         const devices = await sonosSearch()
 
-        let promises = devices.map(async device => {
+        const promises = devices.map(async device => {
             const tunnel = await DeviceTunnel.createFor(device, this.options)
 
             tunnel.on('error', (err: any) => {

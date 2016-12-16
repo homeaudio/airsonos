@@ -11,12 +11,12 @@ flags.parse()
 
 if (flags.get('version')) {
 
-    let pjson = require('../package.json')
+    const pjson = require('../package.json')
     console.log(pjson.version)
 
 } else if (flags.get('diagnostics')) {
 
-    let diag = require('../lib/diagnostics')
+    const diag = require('../lib/diagnostics')
     diag()
 
 } else {
@@ -24,8 +24,8 @@ if (flags.get('version')) {
     console.log('Searching for Sonos devices on network...\n')
 
     const instance = new AirSonos({
-        verbose: flags.get('verbose'),
         timeout: flags.get('timeout'),
+        verbose: flags.get('verbose'),
     })
 
     instance.start().then((tunnels) => {
