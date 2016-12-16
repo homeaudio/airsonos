@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2015",
+        "outDir": "lib/",
+        "declaration": true,
+        "sourceMap": true,
+        "alwaysStrict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true
+    },
+    "files": [
+        "./src/index.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
