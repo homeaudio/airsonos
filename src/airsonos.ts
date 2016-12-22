@@ -1,6 +1,5 @@
-import { sonosSearch } from './sonos'
+import { search, Sonos } from 'sonos'
 import { DeviceTunnel } from './tunnel'
-import * as sonos from 'sonos'
 
 export class AirSonos {
 
@@ -9,9 +8,7 @@ export class AirSonos {
     constructor(readonly options = {}) { }
 
     start() {
-        const searcher = sonos.search(async (device, model) => {
-            console.log(device)
-            console.log(model)
+        search(async (device: Sonos, model) => {
 
             const tunnel = await DeviceTunnel.createFor(device, this.options)
             tunnel.on('error', (err: any) => {
@@ -28,13 +25,6 @@ export class AirSonos {
             tunnel.start()
             this.tunnels[tunnel.device.groupId] = tunnel
         })
-    }
-
-    async refresh() {
-        const devices = await sonosSearch()
-            // remove old groups
-            // add new groups
-            // update existing groups with new configurations
     }
 
     stop() {
