@@ -4,10 +4,6 @@ import { Nicercast } from 'nicercast'
 import * as ip from 'ip'
 import { Sonos } from 'sonos'
 
-// the SONOS library sometimes expects callbacks to function,
-// even if we don't really care about the result
-const EMPTY_CALLBACK = () => { }
-
 function generateSonosMetadata(clientName: string) {
         return `<?xml version="1.0"?>
 <DIDL-Lite xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:upnp="urn:schemas-upnp-org:metadata-1-0/upnp/" xmlns:r="urn:schemas-rinconnetworks-com:metadata-1-0/" xmlns="urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/">
@@ -21,12 +17,18 @@ function generateSonosMetadata(clientName: string) {
 
 export class DeviceTunnel extends EventEmitter {
 
+    readonly device: Sonos
+    readonly deviceName: string
+    private readonly nodeTunesOptions: Partial<NodeTunesOptions>
     icecastServer: Nicercast
     airplayServer: NodeTunes
 
-    constructor(readonly device: Sonos, readonly deviceName: string,
-                readonly options: Partial<NodeTunesOptions>) {
+    constructor(device: Sonos, deviceName: string,
+                nodeTunesOptions: Partial<NodeTunesOptions>) {
         super()
+        this.device = device
+        this.deviceName = deviceName
+        this.nodeTunesOptions = nodeTunesOptions
         this.bindAirplayServer()
     }
 
@@ -41,7 +43,7 @@ export class DeviceTunnel extends EventEmitter {
 
         this.airplayServer = new NodeTunes({
             serverName: `${this.deviceName} (AirSonos)`,
-            ...this.options,
+            ...this.nodeTunesOptions,
         })
 
         this.airplayServer.on('error', this.emit.bind(this, 'error'))
@@ -67,6 +69,7 @@ export class DeviceTunnel extends EventEmitter {
         this.icecastServer = new Nicercast(audioStream)
 
         this.airplayServer.on('metadataChange', (metadata) => {
+            console.log('METADATA CHANGING')
             if (metadata.minm) {
                 const asarPart = metadata.asar ? ` - ${metadata.asar}` : '' // artist
                 const asalPart = metadata.asal ? ` (${metadata.asal})` : '' // album
@@ -77,9 +80,13 @@ export class DeviceTunnel extends EventEmitter {
 
         this.airplayServer.on('clientDisconnected', () => this.icecastServer.close())
 
-        this.icecastServer.listen(0, () => {
+        this.icecastServer.listen(0, async () => {
             // query the server to find the active port
             const port = this.icecastServer.address().port
+            console.log('Getting queue')
+            const queue = await this.device.getQueue()
+            console.log('Got queue!')
+            console.log(queue)
             this.device.play(`x-rincon-mp3radio://${ip.address()}:${port}/listen.m3u`,
                              generateSonosMetadata(this.deviceName))
         })

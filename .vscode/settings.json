@@ -1,11 +1,12 @@
 {
     "typescript.tsdk": "./node_modules/typescript/lib",
     "files.trimTrailingWhitespace": true,
-    "search.exclude": {
-        "**/node_modules": true,
-        "**/*.js": true,
-        "**/*.d.ts": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/*.js": {"when": "$(basename).ts"},
         "**/*.js.map": true
-    },
-    "tslint.autoFixOnSave": true
+    }
 }

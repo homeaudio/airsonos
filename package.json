@@ -16,10 +16,10 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "lint": "tslint -c tslint.json ./src/*.ts"
+    "lint": "tslint -c tslint.json ./lib/*.ts"
   },
   "bin": {
-    "airsonos": "./dist/bin.js"
+    "airsonos": "./lib/bin.js"
   },
   "repository": {
     "type": "git",
